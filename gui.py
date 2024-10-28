@@ -7,13 +7,15 @@ from PyQt5.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QLineEdit, QPush
 from file_operations import count_files, copy_files
 from renamer import FileRenamer  # Import only FileRenamer class to avoid circular import
 from logger import setup_logging
-
+from PyQt5.QtGui import QFont
+from utils import load_stylesheet 
 class FileRenamerApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Rename Genie")
         self.setGeometry(200, 200, 600, 400)
         
+        self.setStyleSheet(load_stylesheet("styles.css"))
         setup_logging()  # Setup logging
         self.folder_path = ""
         self.output_path = ""
@@ -23,9 +25,12 @@ class FileRenamerApp(QMainWindow):
         self.setCentralWidget(self.central_widget)
         self.layout = QVBoxLayout()
         self.central_widget.setLayout(self.layout)
-
+        
+        font = QFont("Arial", 16) 
+        
         # Folder Selection
         self.folder_label = QLabel("Selected Folder:")
+        self.folder_label.setFont(font)
         self.layout.addWidget(self.folder_label)
 
         self.select_folder_button = QPushButton("Select Folder")
