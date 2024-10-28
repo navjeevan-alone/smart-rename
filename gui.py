@@ -9,57 +9,71 @@ from renamer import FileRenamer  # Import only FileRenamer class to avoid circul
 from logger import setup_logging
 from PyQt5.QtGui import QFont
 from utils import load_stylesheet 
+
 class FileRenamerApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Rename Genie")
         self.setGeometry(200, 200, 600, 400)
-        
+
         self.setStyleSheet(load_stylesheet("styles.css"))
         setup_logging()  # Setup logging
         self.folder_path = ""
         self.output_path = ""
-        
+
         # Layout and Widgets
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
         self.layout = QVBoxLayout()
         self.central_widget.setLayout(self.layout)
-        
-        font = QFont("Arial", 16) 
-        
+
+        font = QFont("Arial", 16)
+
         # Folder Selection
         self.folder_label = QLabel("Selected Folder:")
         self.folder_label.setFont(font)
-        self.layout.addWidget(self.folder_label)
-
+        
         self.select_folder_button = QPushButton("Select Folder")
         self.select_folder_button.clicked.connect(self.select_folder)
-        self.layout.addWidget(self.select_folder_button)
+        
+        # Horizontal Layout for Folder Selection
+        folder_layout = QHBoxLayout()
+        folder_layout.addWidget(self.folder_label)
+        folder_layout.addWidget(self.select_folder_button)
+        self.layout.addLayout(folder_layout)
 
         # Output Path Selection
-        self.output_label = QLabel("Selected Output Path:")
-        self.layout.addWidget(self.output_label)
-
-        self.select_output_button = QPushButton("Select Output Path (Optional)")
+        self.output_label = QLabel("Selected Output Folder (Optional):")
+        self.select_output_button = QPushButton("Select Output Folder")
         self.select_output_button.clicked.connect(self.select_output_path)
-        self.layout.addWidget(self.select_output_button)
+        
+        # Horizontal Layout for Output Path Selection
+        output_layout = QHBoxLayout()
+        output_layout.addWidget(self.output_label)
+        output_layout.addWidget(self.select_output_button)
+        self.layout.addLayout(output_layout)
 
         # Pattern Input
         self.pattern_label = QLabel("Enter Prefix Pattern:")
-        self.layout.addWidget(self.pattern_label)
-
         self.pattern_input = QLineEdit()
         self.pattern_input.setPlaceholderText("Enter prefix pattern (e.g., 'file_')")
-        self.layout.addWidget(self.pattern_input)
+
+        # Horizontal Layout for Pattern Input
+        pattern_layout = QHBoxLayout()
+        pattern_layout.addWidget(self.pattern_label)
+        pattern_layout.addWidget(self.pattern_input)
+        self.layout.addLayout(pattern_layout)
 
         # Start Index Input
         self.start_index_label = QLabel("Start Index:")
-        self.layout.addWidget(self.start_index_label)
-
         self.start_index_input = QLineEdit()
         self.start_index_input.setPlaceholderText("Enter start index (default is 1)")
-        self.layout.addWidget(self.start_index_input)
+
+        # Horizontal Layout for Start Index Input
+        start_index_layout = QHBoxLayout()
+        start_index_layout.addWidget(self.start_index_label)
+        start_index_layout.addWidget(self.start_index_input)
+        self.layout.addLayout(start_index_layout)
 
         # Smart Rename Checkbox
         self.smart_rename_checkbox = QCheckBox("Smart Rename")
@@ -89,6 +103,8 @@ class FileRenamerApp(QMainWindow):
         self.log_text.setReadOnly(True)
         self.log_layout.addWidget(self.log_text)
 
+# The rest of your application code goes here
+
     def select_folder(self):
         self.folder_path = QFileDialog.getExistingDirectory(self, "Select Folder")
         self.folder_label.setText(f"Selected Folder: {self.folder_path}")
@@ -113,7 +129,7 @@ class FileRenamerApp(QMainWindow):
         start_index = int(start_index) if start_index.isdigit() else 1
 
         if not prefix_pattern:
-            QMessageBox.warning(self, "Warning", "Please enter a prefix pattern.")
+            QMessageBox.warning(self, "Warning", "Please enter a prefix ")
             return
 
         renamer = FileRenamer(self.folder_path, prefix_pattern, start_index, self.smart_rename_checkbox.isChecked(), self.output_path)

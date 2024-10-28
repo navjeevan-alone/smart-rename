@@ -16,6 +16,8 @@ QPushButton {
     border: 1px solid #555555; 
     padding: 10px; 
     border-radius: 5px; 
+    max-width: 150px;
+    min-width: 100px;
 }
 
 QPushButton:hover {
@@ -34,7 +36,7 @@ QLineEdit {
     padding: 5px; 
     border-radius: 3px;
     font-size: 16px; 
-    
+    max-width: 300px;
 }
 
 
