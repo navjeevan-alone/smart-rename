@@ -7,16 +7,16 @@ from PyQt5.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QLineEdit, QPush
 from file_operations import count_files, copy_files
 from renamer import FileRenamer  # Import only FileRenamer class to avoid circular import
 from logger import setup_logging
-from PyQt5.QtGui import QFont
-from utils import load_stylesheet 
+from PyQt5.QtGui import QFont,QIcon
+from utils import load_stylesheet,resource_path
 
 class FileRenamerApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Rename Genie")
         self.setGeometry(200, 200, 600, 400)
-
-        self.setStyleSheet(load_stylesheet("styles.css"))
+        self.setWindowIcon(QIcon(resource_path("assets\\logo.ico")))
+        self.setStyleSheet(load_stylesheet(resource_path("styles.css")))
         setup_logging()  # Setup logging
         self.folder_path = ""
         self.output_path = ""
@@ -76,8 +76,8 @@ class FileRenamerApp(QMainWindow):
         self.layout.addLayout(start_index_layout)
 
         # Smart Rename Checkbox
-        self.smart_rename_checkbox = QCheckBox("Smart Rename")
-        self.layout.addWidget(self.smart_rename_checkbox)
+        # self.smart_rename_checkbox = QCheckBox("Smart Rename")
+        # self.layout.addWidget(self.smart_rename_checkbox)
 
         # Rename Button
         self.rename_button = QPushButton("Rename Files")
@@ -132,7 +132,7 @@ class FileRenamerApp(QMainWindow):
             QMessageBox.warning(self, "Warning", "Please enter a prefix ")
             return
 
-        renamer = FileRenamer(self.folder_path, prefix_pattern, start_index, self.smart_rename_checkbox.isChecked(), self.output_path)
+        renamer = FileRenamer(self.folder_path, prefix_pattern, start_index, False, self.output_path)
         
         try:
             renamer.rename_files()
