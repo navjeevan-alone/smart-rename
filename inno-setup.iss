@@ -4,7 +4,7 @@
 #define MyAppName "Smart Rename"
 #define MyAppVersion "1.0"
 #define MyAppPublisher "Navjeevan Alone"
-#define MyAppURL "https://yourappwebsite.com"
+#define MyAppURL "https://edburg.in"
 #define MyAppExeName "smart-rename.exe"
 
 [Setup]
@@ -20,8 +20,8 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 DisableProgramGroupPage=yes
 LicenseFile=E:\mini-python-utils-app\try-it\LICENSE
-InfoBeforeFile=E:\mini-python-utils-app\try-it\LICENSE
-InfoAfterFile=E:\mini-python-utils-app\try-it\README.md
+InfoBeforeFile=
+InfoAfterFile=
 OutputDir=E:\mini-python-utils-app\try-it
 OutputBaseFilename=smart_rename_v1_setup
 SetupIconFile=E:\mini-python-utils-app\try-it\assets\logo.ico
@@ -40,8 +40,8 @@ Source: "E:\mini-python-utils-app\try-it\smart-rename.exe"; DestDir: "{app}"; Fl
 Source: "E:\mini-python-utils-app\try-it\styles.css"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
-Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\assets\logo.ico"
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\assets\logo.ico"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
